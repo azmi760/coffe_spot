@@ -31,7 +31,16 @@ export default function JelajahiPage() {
     const query = filters.search.trim();
 
     if (!query) {
-      setLivePlaces(DEMO_PLACES);
+      const stored = localStorage.getItem('cs_places');
+      if (stored) {
+        try {
+          setLivePlaces(JSON.parse(stored));
+        } catch (e) {
+          setLivePlaces(DEMO_PLACES);
+        }
+      } else {
+        setLivePlaces(DEMO_PLACES);
+      }
       setSearchSource('local');
       setIsLoadingLive(false);
       return;

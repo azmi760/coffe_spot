@@ -51,6 +51,15 @@ export const DEMO_PLACES: Place[] = [
     opening_hours: [{ day: 'Senin - Minggu', open: '09:00', close: '23:00' }],
     image_url: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1200&q=80',
     is_active: true,
+    phone_number: '081255558899',
+    instagram: '@norducafe.bjm',
+    menu_items: [
+      { id: 'm1', name: 'Scandinavian Manual Brew', category: 'Kopi', price: 32000, description: 'Biji kopi single origin pilihan diseduh metode V60', is_recommended: true },
+      { id: 'm2', name: 'Aren Latte Nordu Signature', category: 'Kopi', price: 28000, description: 'Espresso double shot dengan gula aren asli Kalimantan', is_recommended: true },
+      { id: 'm3', name: 'Matcha Cream Cheese', category: 'Non-Kopi', price: 30000, description: 'Matcha Uji Jepang premium dipadu foam keju gurih' },
+      { id: 'm4', name: 'Butter Croissant Artisan', category: 'Dessert', price: 25000, description: 'Pastry renyah dipanggang segar setiap pagi', is_recommended: true },
+      { id: 'm5', name: 'Truffle Parmesan Fries', category: 'Makanan', price: 35000, description: 'Kentang goreng renyah dengan minyak truffle dan parmesan' },
+    ],
     created_at: '2026-01-05T10:00:00Z',
     moods: [
       { ...DEMO_MOODS[8], score: 99 },

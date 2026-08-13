@@ -28,7 +28,10 @@ import {
   Airplay,
   Flame,
   Map as MapIcon,
-  Navigation
+  Navigation,
+  Utensils,
+  Coffee,
+  Sparkles
 } from 'lucide-react';
 
 export default function PlaceDetailPage({ params }: { params: { slug: string } }) {
@@ -38,7 +41,17 @@ export default function PlaceDetailPage({ params }: { params: { slug: string } }
   const [copied, setCopied] = useState<boolean>(false);
 
   useEffect(() => {
-    const foundPlace = DEMO_PLACES.find((p) => p.slug === params.slug);
+    let allPlaces: Place[] = DEMO_PLACES;
+    const stored = localStorage.getItem('cs_places');
+    if (stored) {
+      try {
+        allPlaces = JSON.parse(stored);
+      } catch (e) {
+        allPlaces = DEMO_PLACES;
+      }
+    }
+
+    const foundPlace = allPlaces.find((p) => p.slug === params.slug);
     if (foundPlace) {
       setPlace(foundPlace);
       const placeRevs = DEMO_REVIEWS[foundPlace.id] || [];
@@ -164,6 +177,58 @@ export default function PlaceDetailPage({ params }: { params: { slug: string } }
             <p className="text-sm text-coffee-800 leading-relaxed whitespace-pre-line">
               {place?.description}
             </p>
+          </div>
+
+          {/* Coffee & Food Menu List */}
+          <div className="space-y-4 bg-cream-50 p-6 rounded-3xl border border-coffee-200 shadow-sm">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-xl bg-coffee-800 text-cream-50 flex items-center justify-center font-bold">
+                  <Utensils className="w-4 h-4 text-amber-300" />
+                </div>
+                <h2 className="font-serif text-xl font-bold text-coffee-950">Daftar Menu Kopi & Makanan</h2>
+              </div>
+              <span className="text-xs text-coffee-600 font-semibold bg-coffee-100 px-3 py-1 rounded-full">
+                {place?.menu_items?.length || 0} Pilihan Menu
+              </span>
+            </div>
+
+            {place?.menu_items && place.menu_items.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                {place.menu_items.map((item) => (
+                  <div
+                    key={item.id}
+                    className="p-4 rounded-2xl bg-white border border-coffee-200/80 shadow-sm flex flex-col justify-between gap-2 hover:border-coffee-400 transition-colors"
+                  >
+                    <div>
+                      <div className="flex items-start justify-between gap-2">
+                        <span className="font-bold text-coffee-950 text-sm leading-snug">{item.name}</span>
+                        <Badge variant="coffee" size="sm">{item.category}</Badge>
+                      </div>
+                      {item.description && (
+                        <p className="text-xs text-coffee-600 mt-1 line-clamp-2">{item.description}</p>
+                      )}
+                    </div>
+                    <div className="flex items-center justify-between pt-2 border-t border-coffee-100 mt-1">
+                      <span className="font-mono font-extrabold text-sm text-coffee-900">
+                        Rp {item.price.toLocaleString('id-ID')}
+                      </span>
+                      {item.is_recommended && (
+                        <span className="text-[10px] font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded-full flex items-center gap-1">
+                          <Sparkles className="w-3 h-3 text-amber-600" /> Rekomendasi
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="p-6 text-center bg-white rounded-2xl border border-dashed border-coffee-300 space-y-1">
+                <Coffee className="w-8 h-8 text-coffee-400 mx-auto" />
+                <p className="text-xs font-semibold text-coffee-700">Belum ada daftar menu khusus untuk toko kopi ini.</p>
+                <p className="text-[11px] text-coffee-500">Anda dapat menanyakan langsung di lokasi atau melihat katalog di kasir.</p>
+              </div>
+            )}
           </div>
 
           {/* Interactive Google Maps Embed with Exact Pin */}

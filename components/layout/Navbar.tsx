@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Coffee, Heart, Compass, Sparkles, Menu, X, MapPin } from 'lucide-react';
+import { Coffee, Heart, Compass, Sparkles, Menu, X, MapPin, PlusCircle } from 'lucide-react';
 
 export const Navbar = () => {
   const pathname = usePathname();
@@ -23,6 +23,7 @@ export const Navbar = () => {
     { name: 'Jelajahi Kafe', href: '/jelajahi', icon: <Compass className="w-4 h-4" /> },
     { name: 'Cari Mood', href: '/rekomendasi', icon: <Sparkles className="w-4 h-4" /> },
     { name: 'Favorit Saya', href: '/favorit', icon: <Heart className="w-4 h-4" /> },
+    { name: 'Manajemen Kafe', href: '/admin', icon: <PlusCircle className="w-4 h-4" /> },
   ];
 
   return (

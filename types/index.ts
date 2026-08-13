@@ -52,6 +52,16 @@ export interface PlaceMoodScore {
   score: number; // 1-100 or rating weight
 }
 
+export interface MenuItem {
+  id: string;
+  name: string;
+  category: 'Kopi' | 'Non-Kopi' | 'Makanan' | 'Dessert';
+  price: number; // e.g. 28000
+  description?: string;
+  is_recommended?: boolean;
+  image_url?: string;
+}
+
 export interface Place {
   id: string;
   name: string;
@@ -68,6 +78,9 @@ export interface Place {
   opening_hours: OpeningHour[];
   image_url: string;
   is_active: boolean;
+  phone_number?: string;
+  instagram?: string;
+  menu_items?: MenuItem[];
   created_at?: string;
   updated_at?: string;
   // Joined properties

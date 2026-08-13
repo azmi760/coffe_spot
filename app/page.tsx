@@ -1,14 +1,30 @@
-import React from 'react';
+'use client';
+
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { DEMO_MOODS, DEMO_PLACES } from '@/lib/mock-data';
 import { PlaceCard } from '@/components/places/PlaceCard';
 import { Button } from '@/components/ui/Button';
+import { Place } from '@/types';
 import { Sparkles, Compass, Star, ArrowRight, Coffee, Heart, Target, Users, BookOpen, Smile, Camera, Music, Moon, VolumeX, MapPin, Zap } from 'lucide-react';
 
 export default function HomePage() {
-  const popularPlaces = DEMO_PLACES.slice(0, 3);
-  const topRatedPlaces = [...DEMO_PLACES].sort((a, b) => b.average_rating - a.average_rating).slice(0, 3);
-  const latestPlaces = [...DEMO_PLACES].reverse().slice(0, 3);
+  const [allPlaces, setAllPlaces] = useState<Place[]>(DEMO_PLACES);
+
+  useEffect(() => {
+    const stored = localStorage.getItem('cs_places');
+    if (stored) {
+      try {
+        setAllPlaces(JSON.parse(stored));
+      } catch (e) {
+        setAllPlaces(DEMO_PLACES);
+      }
+    }
+  }, []);
+
+  const popularPlaces = allPlaces.slice(0, 3);
+  const topRatedPlaces = [...allPlaces].sort((a, b) => b.average_rating - a.average_rating).slice(0, 3);
+  const latestPlaces = [...allPlaces].reverse().slice(0, 3);
 
   return (
     <div className="space-y-24 pb-24">
